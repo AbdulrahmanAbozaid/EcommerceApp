@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
+const { connection } = require("./dbConnection");
 
+connection();
 app.use(express.json());
 app.use(
   cors({
