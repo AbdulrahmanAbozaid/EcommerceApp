@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
+require("dotenv").config();
 
 const cors = require("cors");
-const { connection } = require("./dbConnection");
+const { connection } = require("./database");
+const Routes = require("../routes/index.routes");
 
 connection();
 app.use(express.json());
@@ -14,5 +16,6 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+app.use(Routes);
 
 module.exports = app;

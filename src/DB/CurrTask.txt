@@ -1,0 +1,58 @@
+Certainly! Here are some example routes that you can use to handle the user model in your Node.js and Express project:
+
+1. **Create User**
+   - Route: POST `/users`
+   - Description: Create a new user.
+   - Request Body: `{ firstName, lastName, email, password, role }`
+   - Required Role: None (accessible to all)
+   - Example:
+
+   ```javascript
+   app.post('/users', UserController.createUser);
+   ```
+
+2. **Get User by ID**
+   - Route: GET `/users/:userId`
+   - Description: Get a user by their ID.
+   - Required Role: Admin or Customer Service (for fetching any user) or Customer (for fetching their own profile)
+   - Example:
+
+   ```javascript
+   app.get('/users/:userId', checkPermission(['admin', 'customerService', 'customer']), UserController.getUserById);
+   ```
+
+3. **Update User**
+   - Route: PUT `/users/:userId`
+   - Description: Update a user's information.
+   - Request Body: `{ firstName, lastName, email, password, role }`
+   - Required Role: Admin or Customer Service (for updating any user) or Customer (for updating their own profile)
+   - Example:
+
+   ```javascript
+   app.put('/users/:userId', checkPermission(['admin', 'customerService', 'customer']), UserController.updateUser);
+   ```
+
+4. **Delete User**
+   - Route: DELETE `/users/:userId`
+   - Description: Delete a user.
+   - Required Role: Admin or Customer Service
+   - Example:
+
+   ```javascript
+   app.delete('/users/:userId', checkPermission(['admin', 'customerService']), UserController.deleteUser);
+   ```
+
+5. **Reset Password**
+   - Route: POST `/users/:userId/reset-password`
+   - Description: Reset a user's password.
+   - Request Body: `{ newPassword }`
+   - Required Role: Admin or Customer Service (for resetting any user's password) or Customer (for resetting their own password)
+   - Example:
+
+   ```javascript
+   app.post('/users/:userId/reset-password', checkPermission(['admin', 'customerService', 'customer']), UserController.resetPassword);
+   ```
+
+Note: The above routes assume you have a `UserController` with corresponding methods (`createUser`, `getUserById`, `updateUser`, `deleteUser`, `resetPassword`) that handle the business logic for each route. The `checkPermission` middleware is used to enforce RBAC and check the user's role before allowing access to certain routes.
+
+Please modify the routes according to your project structure, middleware, and naming conventions.
