@@ -1,11 +1,24 @@
 const app = require("express").Router();
 const productsController = require("../../controllers/products.controller");
+const validator = require("../../utils/validator");
+const {
+  productSchema,
+  productUpdateSchema,
+} = require("../../validationSchemas/product.validation");
 
 // Create
-app.post("/createProduct", productsController.createProduct);
+app.post(
+  "/createProduct",
+  validator(productSchema),
+  productsController.createProduct
+);
 
 // Update
-app.put("/updateProduct/:id", productsController.updateProduct);
+app.put(
+  "/updateProduct/:id",
+  validator(productUpdateSchema),
+  productsController.updateProduct
+);
 
 // Delete
 app.delete("/deleteProduct/:id", productsController.deleteProduct);
