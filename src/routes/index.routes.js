@@ -1,9 +1,11 @@
 const app = require("express").Router();
 
-const users = require("./user/user.routes");
-const products = require("./products/products.routes");
+import users from "./user/user.routes";
+import products from "./products/products.routes";
+import orders from "./order/orders.routes";
 
 app.use("/users", users);
 app.use("/products", products);
+app.use("/orders", orders);
 
-module.exports = app;
+export default app;
