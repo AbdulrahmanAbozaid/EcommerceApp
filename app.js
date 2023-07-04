@@ -1,5 +1,7 @@
-import app from "./config/server";
-require("dotenv").config();
+import express from "express";
+import { config } from "dotenv";
+config();
+const app = express();
 
 // Server
 app.listen(process.env.PORT || 8080, () => {

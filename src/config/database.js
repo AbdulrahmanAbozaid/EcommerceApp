@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
-// require("dotenv").config();
-// console.log(process.env.CONNECTION_STING);
+import {
+  connect as _connect,
+  Promise as _Promise,
+  disconnect as _disconnect,
+} from "mongoose";
 const connection = () =>
-  mongoose
-    .connect(process.env.CONNECTION_STRING, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+  _connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
     .then(() => {
       console.log(`Connected to MongoDB`);
     })
@@ -14,13 +15,13 @@ const connection = () =>
       console.log(`${err}`);
     });
 
-module.exports = {
+export default {
   connect: () => {
-    mongoose.Promise = Promise;
-    mongoose.connect(process.env.CONNECTION_STING);
+    _Promise = Promise;
+    _connect(process.env.CONNECTION_STING);
   },
   disconnect: (done) => {
-    mongoose.disconnect(done);
+    _disconnect(done);
   },
   connection,
 };
