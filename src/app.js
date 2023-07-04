@@ -1,4 +1,4 @@
-const app = require("./src/config/server");
+import app from "./config/server";
 require("dotenv").config();
 
 // Server
@@ -6,4 +6,4 @@ app.listen(process.env.PORT || 8080, () => {
   console.log(`Server Is Up and Running on ${process.env.PORT || 8080}`);
 });
 
-module.exports = app;
+export default app;

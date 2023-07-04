@@ -1,10 +1,10 @@
-const express = require("express");
+import express from "express";
 const app = express();
 require("dotenv").config();
 
-const cors = require("cors");
-const { connection } = require("./database");
-const Routes = require("../routes/index.routes");
+import cors from "cors";
+import { connection } from "./database";
+import Routes from "../routes/index.routes";
 
 connection();
 app.use(express.json());
@@ -13,9 +13,9 @@ app.use(
     origin: "*",
     allowedHeaders: "*",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
 app.use(Routes);
 
-module.exports = app;
+export default app;
