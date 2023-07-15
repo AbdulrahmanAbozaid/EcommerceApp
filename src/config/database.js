@@ -1,10 +1,7 @@
-import {
-  connect as _connect,
-  Promise as _Promise,
-  disconnect as _disconnect,
-} from "mongoose";
+import { connect } from "mongoose";
+
 const connection = () =>
-  _connect(process.env.CONNECTION_STRING, {
+  connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -15,13 +12,13 @@ const connection = () =>
       console.log(`${err}`);
     });
 
-export default {
-  connect: () => {
-    _Promise = Promise;
-    _connect(process.env.CONNECTION_STING);
-  },
-  disconnect: (done) => {
-    _disconnect(done);
-  },
-  connection,
-};
+// const connect = () => {
+//   _Promise = Promise;
+//   _connect(process.env.CONNECTION_STING);
+// };
+
+// const disconnect = (done) => {
+//   _disconnect(done);
+// };
+
+export { connection };

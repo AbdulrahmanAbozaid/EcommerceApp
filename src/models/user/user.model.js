@@ -1,30 +1,32 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+import { Schema, model } from "mongoose";
+import { hash } from "bcrypt";
 let saltRounds = 10;
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   userName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  image: { type: Object, required: false },
   role: {
     type: String,
     enum: ["customer", "admin", "customerService", "marketing"],
     default: "customer",
     required: true,
   },
+  active: { type: Boolean, required: true, default: false },
 });
 
 userSchema.pre("save", async function (next) {
   try {
-    this.password = await bcrypt.hash(this.password, saltRounds);
+    this.password = await hash(this.password, saltRounds);
     next();
   } catch (error) {
     console.log('Error in pre("save"): ', error);
   }
 });
 
-const User = mongoose.model("Users", userSchema);
+const User = model("Users", userSchema);
 
-module.exports = User;
+export default User;

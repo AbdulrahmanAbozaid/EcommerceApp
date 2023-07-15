@@ -1,4 +1,4 @@
-import shippingRepo from "../models/shipping/shipping.repo";
+import shippingRepo from "../models/shipping/shipping.repo.js";
 const createShipping = async (req, res) => {
   try {
     const shippingData = req.body;

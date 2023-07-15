@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-export default shippingSchema = Joi.object({
+const shippingSchema = Joi.object({
   orderID: Joi.string().required().messages({
     "any.required": "Order ID is required",
     "string.empty": "Order ID must not be empty",
@@ -18,3 +18,5 @@ export default shippingSchema = Joi.object({
     "date.base": "Estimated delivery date must be a valid date",
   }),
 });
+
+export default shippingSchema;

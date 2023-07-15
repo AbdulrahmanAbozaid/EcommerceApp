@@ -1,10 +1,10 @@
 import { Router } from "express";
-import * as orderController from "../../controllers/order.controller";
-import validator from "../../utils/validator";
-import orderSchema from "../../validationSchemas/order/order.validation";
+import * as orderController from "../../controllers/order.controller.js";
+import validator from "../../utils/validator.js";
+import orderSchema from "../../validationSchemas/order/order.validation.js";
 const app = Router();
 
 app.post("/createOrder", validator(orderSchema), orderController.createOrder);
-app.get("/getOrderById", orderController.getOrderById);
+app.get("/getOrderById/:id", orderController.getOrderById);
 
 export default app;

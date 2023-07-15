@@ -1,11 +1,11 @@
 import { Router } from "express";
-import paymentCtrl from "../../controllers/payment.controller";
-import validator from "../../utils/validator";
-import { paymentSchema } from "../../validationSchemas/payment/payment.validation";
+import { createPayment } from "../../controllers/payment.controller.js";
+import validator from "../../utils/validator.js";
+import { paymentSchema } from "../../validationSchemas/payment/payment.validation.js";
 
 const app = Router();
 
 // Create a new payment
-app.post("/createPayment", validator(paymentSchema), paymentCtrl.createPayment);
+app.post("/createPayment", validator(paymentSchema), createPayment);
 
 export default app;

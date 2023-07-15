@@ -1,4 +1,4 @@
-const Product = require("./product.model");
+import Product from "./product.model.js";
 
 class ProductRepo {
   // create
@@ -115,4 +115,4 @@ class ProductRepo {
   }
 }
 
-module.exports = new ProductRepo();
+export default new ProductRepo();

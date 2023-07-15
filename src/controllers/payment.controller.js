@@ -1,4 +1,4 @@
-import paymentRepo from "../models/payment/payment.repo";
+import paymentRepo from "../models/payment/payment.repo.js";
 
 const createPayment = async (req, res) => {
   try {

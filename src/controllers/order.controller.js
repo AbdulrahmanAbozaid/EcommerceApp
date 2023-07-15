@@ -1,4 +1,4 @@
-import orderRepo from "../models/order/order.repo";
+import orderRepo from "../models/order/order.repo.js";
 
 const createOrder = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ const createOrder = async (req, res) => {
 const getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await orderRepo.getOrderById(orderId);
+    const result = await orderRepo.getOrderById(id);
 
     if (result.success) {
       return res.status(result.code).json(result.data);

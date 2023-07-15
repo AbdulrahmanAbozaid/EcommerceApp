@@ -1,4 +1,4 @@
-import Order from "./order.model";
+import Order from "./order.model.js";
 
 class OrderRepo {
   async createOrder(orderData) {

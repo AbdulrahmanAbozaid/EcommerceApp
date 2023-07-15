@@ -1,7 +1,7 @@
-const productRepo = rquire("../models/product/product.repo.js");
+import productRepo from "../models/product/product.repo.js";
 
 // Create a new product
-exports.createProduct = async (req, res) => {
+export async function createProduct(req, res) {
   try {
     const productData = req.body;
     const result = await productRepo.createProduct(productData);
@@ -16,12 +16,12 @@ exports.createProduct = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
 
 // Get a product by ID
-exports.getProductById = async (req, res) => {
+export async function getProductById(req, res) {
   try {
-    const productId = req.params.productId;
+    const productId = req.params.id;
     const result = await productRepo.getProductById(productId);
 
     if (result.success) {
@@ -34,12 +34,12 @@ exports.getProductById = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
 
 // Update a product
-exports.updateProduct = async (req, res) => {
+export async function updateProduct(req, res) {
   try {
-    const productId = req.params.productId;
+    const productId = req.params.id;
     const updateData = req.body;
     const result = await productRepo.updateProduct(productId, updateData);
 
@@ -53,10 +53,10 @@ exports.updateProduct = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
 
 // Delete a product
-exports.deleteProduct = async (req, res) => {
+export async function deleteProduct(req, res) {
   try {
     const productId = req.params.productId;
     const result = await productRepo.deleteProduct(productId);
@@ -71,12 +71,12 @@ exports.deleteProduct = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
 
 // Get all products
-exports.listProducts = async (req, res) => {
+export async function listProducts(req, res) {
   try {
-    const result = await productRepo.listProducts();
+    const result = await productRepo.list();
 
     if (result.success) {
       return res.status(result.code).json({ success: true, data: result.data });
@@ -88,4 +88,4 @@ exports.listProducts = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}

@@ -1,4 +1,4 @@
-import Payment from "./payment.model";
+import Payment from "./payment.model.js";
 class PaymentRepo {
   async createPayment(paymentData) {
     try {

@@ -1,9 +1,15 @@
-const userRepository = require("../models/user/user.repo");
+import userRepository from "../models/user/user.repo.js";
 
-exports.createUser = async (req, res) => {
+export async function register(req, res) {
   const userData = req.body;
 
   try {
+    const found = await userRepository.isExist(userData.email);
+
+    if (found.data) {
+      return res.status(400).json(found);
+    }
+
     const result = await userRepository.createUser(userData);
 
     if (result.success) {
@@ -14,9 +20,25 @@ exports.createUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to create user!" });
   }
-};
+}
 
-exports.getUserById = async (req, res) => {
+export async function uploadUserImage(req, res) {
+  try {
+    const image = req.file;
+    const { id } = req.params;
+    const result = await userRepository.uploadProfilePhoto(id, image);
+
+    if (result.data) {
+      res.status(result.code).json(result);
+    } else {
+      res.status(result.code).json({ error: result.error });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to upload User Image" });
+  }
+}
+
+export async function getUserById(req, res) {
   const userId = req.params.id;
 
   try {
@@ -29,9 +51,9 @@ exports.getUserById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch user" });
   }
-};
+}
 
-exports.updateUser = async (req, res) => {
+export async function updateUser(req, res) {
   const userId = req.params.id;
   const updateData = req.body;
 
@@ -45,9 +67,9 @@ exports.updateUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to update user" });
   }
-};
+}
 
-exports.deleteUser = async (req, res) => {
+export async function deleteUser(req, res) {
   const userId = req.params.id;
 
   try {
@@ -60,9 +82,9 @@ exports.deleteUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to delete user" });
   }
-};
+}
 
-exports.resetPassword = async (req, res) => {
+export async function resetPassword(req, res) {
   const userId = req.params.id;
   const newPassword = req.body.newPassword;
 
@@ -76,9 +98,9 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to reset password" });
   }
-};
+}
 
-exports.getAllUsers = async (req, res) => {
+export async function getAllUsers(req, res) {
   try {
     const result = await userRepository.list({});
 
@@ -90,4 +112,4 @@ exports.getAllUsers = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to get all users" });
   }
-};
+}

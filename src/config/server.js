@@ -1,11 +1,11 @@
 import express from "express";
 import { config } from "dotenv";
-const app = express();
 config();
-
 import cors from "cors";
-import { connection } from "./database";
-import Routes from "../routes/index.routes";
+import { connection } from "./database.js";
+import Routes from "../routes/index.routes.js";
+
+const app = express();
 
 connection();
 app.use(express.json());

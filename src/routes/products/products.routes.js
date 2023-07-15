@@ -1,32 +1,31 @@
-const app = require("express").Router();
-const productsController = require("../../controllers/products.controller");
-const validator = require("../../utils/validator");
-const {
+import { Router } from "express";
+const app = Router();
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  listProducts,
+  getProductById,
+} from "../../controllers/products.controller.js";
+import validator from "../../utils/validator.js";
+import {
   productSchema,
   productUpdateSchema,
-} = require("../../validationSchemas/product.validation");
+} from "../../validationSchemas/product/product.validation.js";
 
 // Create
-app.post(
-  "/createProduct",
-  validator(productSchema),
-  productsController.createProduct
-);
+app.post("/createProduct", validator(productSchema), createProduct);
 
 // Update
-app.put(
-  "/updateProduct/:id",
-  validator(productUpdateSchema),
-  productsController.updateProduct
-);
+app.put("/updateProduct/:id", validator(productUpdateSchema), updateProduct);
 
 // Delete
-app.delete("/deleteProduct/:id", productsController.deleteProduct);
+app.delete("/deleteProduct/:id", deleteProduct);
 
 // List
-app.get("/listProducts", productsController.listProducts);
+app.get("/listProducts", listProducts);
 
 // Get By Id
-app.get("/getProductById", productsController.getProductById);
+app.get("/getProductById/:id", getProductById);
 
-module.exports = app;
+export default app;

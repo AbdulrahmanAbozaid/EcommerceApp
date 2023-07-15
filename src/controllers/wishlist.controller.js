@@ -1,4 +1,4 @@
-import wishlistRepository from "../models/wishlist/wishlist.repo";
+import wishlistRepository from "../models/wishlist/wishlist.repo.js";
 
 export const addToWishlist = async (req, res) => {
   try {

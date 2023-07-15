@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { createShipping } from "../../controllers/shipping.controller";
-import validator from "../../utils/validator";
-import shippingSchema from "../../validationSchemas/shipping/shipping.validation";
+import { createShipping } from "../../controllers/shipping.controller.js";
+import validator from "../../utils/validator.js";
+import shippingSchema from "../../validationSchemas/shipping/shipping.validation.js";
 
 const app = Router();
 

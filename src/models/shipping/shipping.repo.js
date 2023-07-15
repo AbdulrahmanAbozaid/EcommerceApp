@@ -1,4 +1,4 @@
-import Shipping from "./shipping.model";
+import Shipping from "./shipping.model.js";
 
 class ShippingRepository {
   async createShipping(shippingData) {

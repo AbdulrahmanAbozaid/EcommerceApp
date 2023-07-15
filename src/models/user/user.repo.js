@@ -1,5 +1,6 @@
-const User = require("./user.model");
-const bcrypt = require("bcrypt");
+import User from "./user.model.js";
+import { hash, compare } from "bcrypt";
+import fs from "fs";
 
 class UserRepository {
   async createUser(userData) {
@@ -36,6 +37,38 @@ class UserRepository {
         success: false,
         data: null,
         error: "Failed to fetch users",
+      };
+    }
+  }
+
+  async uploadProfilePhoto(id, image) {
+    try {
+      const { data } = await this.getUserById(id);
+      if (data) {
+        let oldImage = data.image;
+        if (oldImage) {
+          fs.unlinkSync(oldImage.path);
+        }
+        const updatedUser = await this.updateUser(id, { image });
+        return {
+          code: 201,
+          success: true,
+          data: updatedUser,
+        };
+      } else {
+        return {
+          code: 404,
+          success: false,
+          data: null,
+          error: "User does not exist",
+        };
+      }
+    } catch (error) {
+      return {
+        code: 500,
+        success: false,
+        data: null,
+        error: "Failed to upload image",
       };
     }
   }
@@ -113,11 +146,21 @@ class UserRepository {
 
   async isExist(email) {
     try {
-      const user = await User.findOne({ email: email });
+      const user = await User.findOne({ email });
       if (user) {
-        return { code: 200, success: true, data: true, error: null };
+        return {
+          code: 200,
+          success: true,
+          data: user,
+          message: "User already exists",
+        };
       } else {
-        return { code: 200, success: true, data: false, error: null };
+        return {
+          code: 404,
+          success: false,
+          data: null,
+          error: "User Not Found",
+        };
       }
     } catch (error) {
       return {
@@ -131,7 +174,7 @@ class UserRepository {
 
   async resetPassword(userId, newPassword) {
     try {
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      const hashedPassword = await hash(newPassword, 10);
       const updatedUser = await User.findByIdAndUpdate(
         userId,
         { password: hashedPassword },
@@ -159,8 +202,18 @@ class UserRepository {
 
   async comparePassword(password, hashedPassword) {
     try {
-      const isMatch = await bcrypt.compare(password, hashedPassword);
-      return { code: 200, success: true, data: isMatch, error: null };
+      const isMatch = await compare(password, hashedPassword);
+
+      if (isMatch) {
+        return { code: 200, success: true, data: true };
+      } else {
+        return {
+          code: 400,
+          success: false,
+          data: password,
+          error: "Password doesn't match",
+        };
+      }
     } catch (error) {
       return {
         code: 500,
@@ -172,4 +225,4 @@ class UserRepository {
   }
 }
 
-module.exports = new UserRepository();
+export default new UserRepository();

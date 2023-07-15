@@ -1,55 +1,50 @@
-const joi = require("joi");
+import Joi from "joi";
 
-const productSchema = joi
-  .object()
+const productSchema = Joi.object()
   .required()
   .keys({
-    productName: joi.string().required().messages({
+    productName: Joi.string().required().messages({
       "string.base": "Product name must be a string",
       "any.required": "Product name is required",
     }),
-    description: joi.string().required().messages({
+    description: Joi.string().required().messages({
       "string.base": "Description must be a string",
       "any.required": "Description is required",
     }),
-    price: joi.number().positive().required().messages({
+    price: Joi.number().positive().required().messages({
       "number.base": "Price must be a number",
       "number.positive": "Price must be a positive number",
       "any.required": "Price is required",
     }),
-    category: joi.string().required().messages({
+    category: Joi.string().required().messages({
       "string.base": "Category must be a string",
       "any.required": "Category is required",
     }),
-    availability: joi.boolean().required().messages({
+    availability: Joi.boolean().required().messages({
       "boolean.base": "Availability must be a boolean",
       "any.required": "Availability is required",
     }),
   });
 
-const productUpdateSchema = joi
-  .object()
+const productUpdateSchema = Joi.object()
   .required()
   .keys({
-    productName: joi.string().optional().messages({
+    productName: Joi.string().optional().messages({
       "string.base": "Product name must be a string",
     }),
-    description: joi.string().optional().messages({
+    description: Joi.string().optional().messages({
       "string.base": "Description must be a string",
     }),
-    price: joi.number().positive().optional().messages({
+    price: Joi.number().positive().optional().messages({
       "number.base": "Price must be a number",
       "number.positive": "Price must be a positive number",
     }),
-    category: joi.string().optional().messages({
+    category: Joi.string().optional().messages({
       "string.base": "Category must be a string",
     }),
-    availability: joi.boolean().optional().messages({
+    availability: Joi.boolean().optional().messages({
       "boolean.base": "Availability must be a boolean",
     }),
   });
 
-module.exports = {
-  productSchema,
-  productUpdateSchema,
-};
+export { productSchema, productUpdateSchema };
