@@ -1,23 +1,46 @@
 # Ecommerce Application
 
-## Data Models
+## Data Models:
 
-1. Users (userID PK, firstName, lastName, email, password, role)
+1. Users
 
-\*role => ['customer', 'admin', 'customerService', 'marketing']
+2. Products
 
-2. Products (productID PK, productName, description, price, category, availability)
+3. Orders
 
-3. Orders (orderID PK, customerID FK REFERENCES UserAccounts(userID), orderDate, orderStatus)
+4. Payment
 
-\*status => ('pending', 'shipped', 'delivered')
+5. Shipping
 
-4. OrderItems (orderID FK REFERENCES Orders(orderID), productID FK REFERENCES ProductCatalog(productID), quantity, price, totalCost)
+6. Wishlist
 
-5. Payment (customerID, orderID, amount, method)
+## Roles:
 
-\*method => ('creditCard', 'debitCard', 'paypal')
+- Cutomer
+- Admin
+- Seller
 
-6. Shipping (shippingID PK, orderID FK REFERENCES Orders(orderID), shippingAddress, shippingMethod, estimatedDeliveryDate)
+## routes:
 
-7. Wishlist (wishlistID PK, customerID FK REFERENCES UserAccounts(userID), productID FK REFERENCES ProductCatalog(productID), dateAdded)
+- CREATE_USER
+- UPLOAD_USER_IMAGE
+- GET_ALL_USERS
+- GET_USER_BY_ID
+- UPDATE_USER
+- DELETE_USER
+- CREATE_PRODUCT
+- UPDATE_PRODUCT
+- DELETE_PRODUCT
+- LIST_PRODUCTS
+- GET_PRODUCT_BY_ID
+- CREATE_ORDER
+- GET_ORDER_BY_ID
+- CREATE_ORDER_ITEMS
+- GET_ORDER_ITEMS_BY_ORDER_ID
+- CREATE_PAYMENT
+- GET_PAYMENT_BY_ORDER_ID
+- CREATE_SHIPPING
+- GET_SHIPPING_BY_ORDER_ID
+- ADD_TO_WISHLIST
+- GET_WISHLIST_BY_CUSTOMER_ID
+- REMOVE_FROM_WISHLIST
