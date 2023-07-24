@@ -1,5 +1,35 @@
 import Joi from "joi";
 
+export const userAuthSchema = Joi.object()
+  .required()
+  .keys({
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        tlds: {
+          allow: ["com", "org", "email"],
+        },
+      })
+      .required()
+      .empty()
+      .messages({
+        "string.base": "Email must be a string",
+        "string.email": "Invalid email format",
+        "any.required": "Email is required",
+        "string.empty": "Email must not be empty",
+      }),
+    password: Joi.string()
+      .required()
+      .empty()
+      .pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
+      .messages({
+        "string.base": "Password must be a string",
+        "any.required": "Password is required",
+        "string.pattern.base":
+          "password must contain Minimum eight characters, at least one letter and one number",
+      }),
+  });
+
 export const userSchema = Joi.object()
   .required()
   .keys({
@@ -58,7 +88,7 @@ export const userSchema = Joi.object()
           "password must contain Minimum eight characters, at least one letter and one number",
       }),
     role: Joi.string()
-      .valid("customer", "admin", "customerService", "marketing")
+      .valid("customer", "admin", "seller")
       .empty()
       .required()
       .messages({
@@ -122,7 +152,7 @@ export const userUpdateSchema = Joi.object()
           "password must contain Minimum eight characters, at least one letter and one number",
       }),
     role: Joi.string()
-      .valid("customer", "admin", "customerService", "marketing")
+      .valid("customer", "admin", "seller")
       .empty()
       .optional()
       .messages({

@@ -11,7 +11,7 @@ const userSchema = new Schema({
   image: { type: Object, required: false },
   role: {
     type: String,
-    enum: ["customer", "admin", "customerService", "marketing"],
+    enum: ["customer", "admin", "seller"],
     default: "customer",
     required: true,
   },

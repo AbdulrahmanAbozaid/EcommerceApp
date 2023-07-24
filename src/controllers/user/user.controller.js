@@ -1,5 +1,44 @@
-import userRepository from "../models/user/user.repo.js";
+import userRepository from "../../models/user/user.repo.js";
+import { generateToken } from "../../utils/token.utils.js";
 
+/*
+export async function login(req, res) {
+  const { email, password } = req.body;
+
+  try {
+    const found = await userRepository.isExist(email);
+    if (found.data) {
+      const loggedIn = await userRepository.comparePassword(
+        password,
+        found.data.password
+      );
+
+      if (loggedIn) {
+        const accessToken = await generateToken({
+          _id: found.data._id,
+          role: found.data.role,
+          email: found.data.email,
+        });
+        res.status(200).json({
+          code: 200,
+          success: true,
+          data: accessToken,
+        });
+      } else {
+        res.status(403).json({
+          code: 403,
+          success: false,
+          error: "Invalid password",
+        });
+      }
+    } else {
+      res.status(found.code).json(found);
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to create user!" });
+  }
+}
+*/
 export async function register(req, res) {
   const userData = req.body;
 

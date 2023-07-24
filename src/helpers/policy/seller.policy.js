@@ -1,0 +1,15 @@
+import {
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
+  LIST_PRODUCTS,
+  GET_PRODUCT_BY_ID,
+} from "../endpoints.js";
+
+export default [
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
+  LIST_PRODUCTS,
+  GET_PRODUCT_BY_ID,
+];

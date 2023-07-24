@@ -205,12 +205,12 @@ class UserRepository {
       const isMatch = await compare(password, hashedPassword);
 
       if (isMatch) {
-        return { code: 200, success: true, data: true };
+        return { code: 200, success: true, data: "logged in Successfuly" };
       } else {
         return {
           code: 400,
           success: false,
-          data: password,
+          data: null,
           error: "Password doesn't match",
         };
       }

@@ -12,20 +12,38 @@ import {
   productSchema,
   productUpdateSchema,
 } from "../../validationSchemas/product/product.validation.js";
+import { authenticate } from "./../../utils/token.utils";
+import * as endpoints from "../../helpers/endpoints.js";
 
 // Create
-app.post("/createProduct", validator(productSchema), createProduct);
+app.post(
+  "/createProduct",
+  [validator(productSchema), authenticate(endpoints.CREATE_PRODUCT)],
+  createProduct
+);
 
 // Update
-app.put("/updateProduct/:id", validator(productUpdateSchema), updateProduct);
+app.put(
+  "/updateProduct/:id",
+  [validator(productUpdateSchema), authenticate(endpoints.UPDATE_PRODUCT)],
+  updateProduct
+);
 
 // Delete
-app.delete("/deleteProduct/:id", deleteProduct);
+app.delete(
+  "/deleteProduct/:id",
+  authenticate(endpoints.DELETE_PRODUCT),
+  deleteProduct
+);
 
 // List
-app.get("/listProducts", listProducts);
+app.get("/listProducts", authenticate(endpoints.LIST_PRODUCTS), listProducts);
 
 // Get By Id
-app.get("/getProductById/:id", getProductById);
+app.get(
+  "/getProductById/:id",
+  authenticate(endpoints.GET_PRODUCT_BY_ID),
+  getProductById
+);
 
 export default app;
