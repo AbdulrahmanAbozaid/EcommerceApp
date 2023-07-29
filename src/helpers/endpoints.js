@@ -26,3 +26,9 @@ export const GET_SHIPPING_BY_ORDER_ID = "shipping:getShippingByOrderId";
 export const ADD_TO_WISHLIST = "wishlist:addToWishlist";
 export const GET_WISHLIST_BY_CUSTOMER_ID = "wishlist:getWishlistByCustomerId";
 export const REMOVE_FROM_WISHLIST = "wishlist:removeFromWishlist";
+
+export const CREATE_CART = "cart:createCart";
+export const GET_CART_BY_USER_ID = "cart:getCartByUserId";
+export const ADD_TO_CART = "cart:addToCart";
+export const UPDATE_CART_ITEM_QUANTITY = "cart:updateCartItemQuantity";
+export const REMOVE_FROM_CART = "cart:removeFromCart";

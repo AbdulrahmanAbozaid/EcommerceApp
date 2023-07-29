@@ -1,5 +1,6 @@
 import userRepository from "../../models/user/user.repo.js";
 import { generateToken } from "../../utils/token.utils.js";
+import sendMail from "./../../services/sendMail.service.js";
 
 /*
 export async function login(req, res) {
@@ -50,9 +51,23 @@ export async function register(req, res) {
     }
 
     const result = await userRepository.createUser(userData);
+    const token = await generateToken({
+      _id: result.data._id,
+      email: result.data.email,
+      role: result.data.role,
+    });
+    const activationLink = `Click on this URL to verify your account: http://localhost:${process.env.PORT}/users/verify/${token}`;
+    const verifyHTML = `<a href="${activationLink}">Click Here</a>`;
+
+    await sendMail(
+      result.data.email,
+      "Verification",
+      activationLink,
+      verifyHTML
+    );
 
     if (result.success) {
-      res.status(result.code).json(result);
+      res.status(result.code).json({ ...result, activationLink });
     } else {
       res.status(result.code).json({ error: result.error });
     }
