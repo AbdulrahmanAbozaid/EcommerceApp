@@ -8,18 +8,18 @@ import {
   deleteUser,
   uploadUserImage,
 } from "../../controllers/user/user.controller.js";
-import validate from "../../services/validator.js";
+import validator from "../../services/validator.service.js";
 import {
   userSchema,
   userUpdateSchema,
 } from "../../validationSchemas/user/user.validation.js";
-import uploader from "../../services/uploader.js";
-import { authenticate } from "./../../utils/token.utils";
+import uploader from "../../services/uploader.service.js";
+import { authenticate } from "./../../utils/token.utils.js";
 import * as endpoints from "../../helpers/endpoints.js";
 const upload = uploader("users");
 
-app.post("/createUser", validate(userSchema), register);
-app.put("/uploadImage", upload.single("profileImage"), uploadUserImage);
+app.post("/createUser", validator(userSchema), register);
+app.put("/uploadImage/:id", upload.single("profileImage"), uploadUserImage);
 app.get("/getAllUsers", authenticate(endpoints.GET_ALL_USERS), getAllUsers);
 app.get(
   "/getUserById/:id",
@@ -28,7 +28,7 @@ app.get(
 );
 app.put(
   "/updateUser/:id",
-  [validate(userUpdateSchema), authenticate(endpoints.UPDATE_USER)],
+  [validator(userUpdateSchema), authenticate(endpoints.UPDATE_USER)],
   updateUser
 ); // optional joi option for update schema
 app.delete("/deleteUser/:id", authenticate(endpoints.DELETE_USER), deleteUser);

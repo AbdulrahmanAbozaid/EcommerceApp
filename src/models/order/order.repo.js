@@ -11,6 +11,66 @@ class OrderRepo {
     }
   }
 
+  async updateOrderStatus(orderId, orderStatus) {
+    try {
+      const order = await Order.findByIdAndUpdate(
+        orderId,
+        { orderStatus },
+        { new: true }
+      );
+      return { success: true, code: 200, data: order, error: null };
+    } catch (error) {
+      return {
+        success: false,
+        code: 500,
+        data: null,
+        error: "Failed to update order status.",
+      };
+    }
+  }
+
+  async cancelOrder(orderId) {
+    try {
+      const order = await Order.findByIdAndDelete(orderId);
+      return { success: true, code: 200, data: order, error: null };
+    } catch (error) {
+      return {
+        success: false,
+        code: 500,
+        data: null,
+        error: "Failed to cancel order.",
+      };
+    }
+  }
+
+  async getOrdersByCustomerId(customerId) {
+    try {
+      const orders = await Order.find({ customerID: customerId });
+      return { success: true, code: 200, data: orders, error: null };
+    } catch (error) {
+      return {
+        success: false,
+        code: 500,
+        data: null,
+        error: "Failed to get orders.",
+      };
+    }
+  }
+
+  async listOrders(filter) {
+    try {
+      const orders = await Order.find(filter);
+      return { success: true, code: 200, data: orders, error: null };
+    } catch (error) {
+      return {
+        success: false,
+        code: 500,
+        data: null,
+        error: "Failed to get orders.",
+      };
+    }
+  }
+
   async getOrderById(orderId) {
     try {
       const order = await Order.findById(orderId).populate("customerID").exec();

@@ -12,11 +12,7 @@ export async function verifyUser(req, res) {
       });
 
       if (verified.data.active) {
-        res.status(200).json({
-          success: true,
-          code: 200,
-          data: verified,
-        });
+        res.status(200).json(verified);
       } else {
         res.status(result.code).json(result);
       }

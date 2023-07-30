@@ -4,14 +4,15 @@ import {
   createCartSchema,
   addToCartSchema,
   updateCartItemQuantitySchema,
-} from "../../validationSchemas/cart/cart.validation";
+} from "../../validationSchemas/cart/cart.validation.js";
+import * as cartController from "./../../controllers/cart.controller.js";
 const app = Router();
 
 // Create a new cart
 app.post("/createCart", validator(createCartSchema), cartController.createCart);
 
 // Get cart by user ID
-app.get("/getCartByUserId/:id", validator(getCartByUserId));
+app.get("/getCartByUserId/:id", cartController.getCartByUserId);
 
 // Add item to cart
 app.post("/addToCart", validator(addToCartSchema), cartController.addToCart);

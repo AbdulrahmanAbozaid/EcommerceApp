@@ -13,9 +13,10 @@ export const GET_PRODUCT_BY_ID = "product:getProductById";
 
 export const CREATE_ORDER = "order:createOrder";
 export const GET_ORDER_BY_ID = "order:getOrderById";
-
-export const CREATE_ORDER_ITEMS = "orderItems:createOrderItems";
-export const GET_ORDER_ITEMS_BY_ORDER_ID = "orderItems:getOrderItemsByOrderId";
+export const LIST_ORDERS = "order:listOrders";
+export const UPDATE_ORDER_STATUS = "order:updateOrderStatus";
+export const CANCEL_ORDER = "order:cancelOrder";
+export const GET_ORDERS_BY_CUSTOMER_ID = "order:getOrdersByCustomerId";
 
 export const CREATE_PAYMENT = "payment:createPayment";
 export const GET_PAYMENT_BY_ORDER_ID = "payment:getPaymentByOrderId";

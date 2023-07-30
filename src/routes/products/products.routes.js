@@ -7,12 +7,12 @@ import {
   listProducts,
   getProductById,
 } from "../../controllers/products.controller.js";
-import validator from "../../utils/validator.js";
+import validator from "../../services/validator.service.js";
 import {
   productSchema,
   productUpdateSchema,
 } from "../../validationSchemas/product/product.validation.js";
-import { authenticate } from "./../../utils/token.utils";
+import { authenticate } from "./../../utils/token.utils.js";
 import * as endpoints from "../../helpers/endpoints.js";
 
 // Create

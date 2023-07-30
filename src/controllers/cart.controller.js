@@ -1,4 +1,4 @@
-import cartRepository from "./../models/cart/cart.repo.js";
+import * as cartRepository from "./../models/cart/cart.repo.js";
 
 // Create a new cart
 export const createCart = async (req, res) => {

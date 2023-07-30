@@ -14,6 +14,8 @@
 
 6. Wishlist
 
+7. Cart
+
 ## Roles:
 
 - Cutomer

@@ -3,10 +3,10 @@ import { hash } from "bcrypt";
 let saltRounds = 10;
 
 const userSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  userName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  userName: { type: String, required: true, trim: true },
+  email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true },
   image: { type: Object, required: false },
   role: {

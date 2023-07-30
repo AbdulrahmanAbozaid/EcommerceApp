@@ -43,6 +43,8 @@ export async function login(req, res) {
 export async function register(req, res) {
   const userData = req.body;
 
+  console.log(userData);
+
   try {
     const found = await userRepository.isExist(userData.email);
 
@@ -56,8 +58,8 @@ export async function register(req, res) {
       email: result.data.email,
       role: result.data.role,
     });
-    const activationLink = `Click on this URL to verify your account: http://localhost:${process.env.PORT}/users/verify/${token}`;
-    const verifyHTML = `<a href="${activationLink}">Click Here</a>`;
+    const activationLink = `Click on this URL to verify your account: http://localhost:${process.env.PORT}/users/auth/${token}`;
+    const verifyHTML = `Activation Link: <a href="${activationLink}">${activationLink}</a>`;
 
     await sendMail(
       result.data.email,
@@ -88,7 +90,7 @@ export async function uploadUserImage(req, res) {
       res.status(result.code).json({ error: result.error });
     }
   } catch (error) {
-    res.status(500).json({ error: "Failed to upload User Image" });
+    res.status(500).json({ code: 500, error: "Failed to upload User Image" });
   }
 }
 

@@ -4,11 +4,13 @@ config();
 import cors from "cors";
 import { connection } from "./database.js";
 import Routes from "../routes/index.routes.js";
+import bodyParser from "body-parser";
 
 const app = express();
 
 connection();
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cors({
     origin: "*",

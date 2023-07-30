@@ -51,9 +51,7 @@ class UserRepository {
         }
         const updatedUser = await this.updateUser(id, { image });
         return {
-          code: 201,
-          success: true,
-          data: updatedUser,
+          ...updatedUser,
         };
       } else {
         return {

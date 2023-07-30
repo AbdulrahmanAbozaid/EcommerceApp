@@ -1,6 +1,6 @@
 import express from "express";
 import { addToWishlist } from "../../controllers/wishlist.controller.js";
-import validator from "../../utils/validator.js";
+import validator from "../../services/validator.service.js";
 import wishlistSchema from "../../validationSchemas/wishlist/wishlist.validation.js";
 import { authenticate } from "./../../utils/token.utils";
 import * as endpoints from "../../helpers/endpoints.js";

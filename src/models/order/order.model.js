@@ -17,6 +17,20 @@ const orderSchema = new Schema({
     default: "pending",
     required: true,
   },
+  shipping: {
+    address: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+  },
   orderItems: [
     {
       productID: {
