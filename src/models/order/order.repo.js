@@ -73,7 +73,10 @@ class OrderRepo {
 
   async getOrderById(orderId) {
     try {
-      const order = await Order.findById(orderId).populate("customerID").exec();
+      const order = await Order.findById(orderId)
+        .populate("customerID")
+        .populate("orderItems.productID")
+        .exec();
       if (!order) {
         return { code: 404, success: false, error: "Order not found" };
       }

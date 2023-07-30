@@ -1,5 +1,32 @@
 import { Schema, model } from "mongoose";
 
+const orderItem = new Schema({
+  productID: {
+    type: Schema.Types.ObjectId,
+    ref: "Products",
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+});
+
+const shipping = new Schema({
+  address: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+});
+
 const orderSchema = new Schema({
   customerID: {
     type: Schema.Types.ObjectId,
@@ -17,41 +44,12 @@ const orderSchema = new Schema({
     default: "pending",
     required: true,
   },
-  shipping: {
-    address: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
+  shipping,
+  orderItems: [orderItem],
+  totalPrice: {
+    type: Number,
+    required: true,
   },
-  orderItems: [
-    {
-      productID: {
-        type: Schema.Types.ObjectId,
-        ref: "Products",
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      totalCost: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
 });
 
 const Order = model("Orders", orderSchema);

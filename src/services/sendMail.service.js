@@ -13,8 +13,6 @@ export default async function (to, subject, text, html) {
       },
     });
 
-    console.log(process.env.EMAIL_USER, process.env.EMAIL_PASS, to);
-
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to,

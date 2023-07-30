@@ -2,7 +2,6 @@ import { Router } from "express";
 import * as orderController from "../../controllers/order.controller.js";
 import validator from "./../../services/validator.service.js";
 import {
-  orderItemSchema,
   createOrderSchema,
   updateOrderStatusSchema,
 } from "./../../validationSchemas/order/order.validation.js";
