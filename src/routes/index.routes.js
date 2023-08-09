@@ -1,4 +1,6 @@
 import { Router } from "express";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger.json";
 const app = Router();
 
 import users from "./user/user.routes.js";
@@ -14,6 +16,8 @@ app.use("/products", products);
 app.use("/orders", orders);
 app.use("/payment", payment);
 app.use("/cart", cart);
+app.use("/api-docs", swaggerUi.serve);
+app.get("/api-docs", swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to order");
