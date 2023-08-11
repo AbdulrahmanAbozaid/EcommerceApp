@@ -1,10 +1,11 @@
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 
 const connection = () =>
-  connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  mongoose
+    .connect(process.env.CONNECTION_STRING, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => {
       console.log(`Connected to MongoDB`);
     })
@@ -12,13 +13,13 @@ const connection = () =>
       console.log(`${err}`);
     });
 
-// const connect = () => {
-//   _Promise = Promise;
-//   _connect(process.env.CONNECTION_STING);
-// };
+const connect = () => {
+  mongoose.Promise = Promise;
+  mongoose.connect(process.env.CONNECTION_STING);
+};
 
-// const disconnect = (done) => {
-//   _disconnect(done);
-// };
+const disconnect = (done) => {
+  mongoose.disconnect(done);
+};
 
-export { connection };
+export { connection, connect, disconnect };
