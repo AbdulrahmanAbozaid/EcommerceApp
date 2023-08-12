@@ -35,8 +35,6 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
-app.use(Routes);
-
 io.on("connection", (socket) => {
   // console.log(socket.id);
 
@@ -52,5 +50,6 @@ io.on("connection", (socket) => {
     console.log(`disconnect ${socket.id} due to ${reason}`);
   });
 });
+app.use(Routes);
 
 export default server;

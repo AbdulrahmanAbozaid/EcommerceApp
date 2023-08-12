@@ -12,10 +12,10 @@ const createPayment = async (req, res) => {
 
     const items = orderItems.map((item) => {
       return {
-        name: item.productID.productName,
+        name: item?.productID?.productName,
         unit_amount: {
           currency_code: "USD",
-          value: item.productID.price,
+          value: item?.productID?.price,
         },
         quantity: item.quantity,
       };
