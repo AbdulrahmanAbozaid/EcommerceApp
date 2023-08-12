@@ -4,8 +4,11 @@
   "description": "Ecommerce App By Nodejs and Express",
   "main": "app.js",
   "type": "module",
+  "jest": {
+    "transform": {}
+  },
   "scripts": {
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "start": "nodemon app.js"
   },
   "repository": {

@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { config } from "dotenv";
+config();
 
 const connection = () =>
   mongoose
@@ -15,7 +17,10 @@ const connection = () =>
 
 const connect = () => {
   mongoose.Promise = Promise;
-  mongoose.connect(process.env.CONNECTION_STING);
+  mongoose.connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 };
 
 const disconnect = (done) => {
