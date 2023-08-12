@@ -1,6 +1,9 @@
 import { Router } from "express";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger.json";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const swaggerDocument = require("./swagger.json");
+// import swaggerDocument from "./swagger.json" assert { type: "json" };
 const app = Router();
 
 import users from "./user/user.routes.js";

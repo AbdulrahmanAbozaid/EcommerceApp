@@ -10,16 +10,6 @@ const orderItemSchema = Joi.object({
     "number.min": "Quantity must be at least 1.",
     "any.required": "Quantity is required.",
   }),
-  price: Joi.number().min(0).required().messages({
-    "number.base": "Price must be a number.",
-    "number.min": "Price must be a positive number or zero.",
-    "any.required": "Price is required.",
-  }),
-  totalCost: Joi.number().min(0).required().messages({
-    "number.base": "Total cost must be a number.",
-    "number.min": "Total cost must be a positive number or zero.",
-    "any.required": "Total cost is required.",
-  }),
 });
 
 const shippingSchema = Joi.object({
@@ -57,6 +47,9 @@ const createOrderSchema = Joi.object({
     }),
   shipping: shippingSchema.required().messages({
     "any.required": "Shipping details are required.",
+  }),
+  totalPrice: Joi.number().empty().optional().messages({
+    "number.base": "total price must be a number",
   }),
 });
 

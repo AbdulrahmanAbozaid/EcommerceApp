@@ -17,7 +17,7 @@ const paymentSchema = new Schema({
   },
   method: {
     type: String,
-    enum: ["creditCard", "debitCard", "paypal"],
+    enum: ["paypal"],
     required: true,
   },
 });

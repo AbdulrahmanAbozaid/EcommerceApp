@@ -7,56 +7,68 @@ const createPayment = async (req, res) => {
     const paymentData = req.body;
     const result = await paymentRepo.createPayment(paymentData);
     const {
-      data: { orderItems, totalPrice },
+      data: { orderItems },
     } = await orderRepo.getOrderById(result.data.orderID);
 
-    const create_payment_json = {
-      intent: "sale",
-      payer: {
-        payment_method: "paypal",
-      },
-      redirect_urls: {
-        return_url: "http://return.url",
-        cancel_url: "http://cancel.url",
-      },
-      transactions: [
+    const items = orderItems.map((item) => {
+      return {
+        name: item.productID.productName,
+        unit_amount: {
+          currency_code: "USD",
+          value: item.productID.price,
+        },
+        quantity: item.quantity,
+      };
+    });
+
+    let totalPrice = items.reduce((sum, item) => {
+      return sum + +item.unit_amount.value * +item.quantity;
+    }, 0);
+
+    const obj = {
+      intent: "CAPTURE",
+      purchase_units: [
         {
-          item_list: {
-            items: orderItems.map((item) => {
-              return {
-                name: item.productID.productName,
-                unit_amount: item.productID.price,
-                quantity: item.quantity,
-              };
-            }),
-          },
           amount: {
-            currency: "USD",
-            total: paymentData.amount,
+            currency_code: "USD",
+            value: totalPrice,
+            breakdown: {
+              item_total: { currency_code: "USD", value: totalPrice },
+            },
           },
-          description: "Order Payment",
+          items,
+          shipping: {
+            address: {
+              address_line_1: "1234 Main St",
+              address_line_2: "Apt 2B",
+              admin_area_2: "San Jose",
+              admin_area_1: "CA",
+              postal_code: "95131",
+              country_code: "US",
+            },
+          },
         },
       ],
+      application_context: {
+        brand_name: "Your Brand Name",
+        locale: "en-US",
+        landing_page: "LOGIN",
+        shipping_preference: "SET_PROVIDED_ADDRESS",
+        user_action: "PAY_NOW",
+        return_url: "http://localhost:3000/payment/success",
+        cancel_url: "http://localhost:3000/payment/cancel",
+      },
     };
 
-    create_payment(create_payment_json)
-      .then((transaction) => {
-        console.log(`payment created\n transaction: " + ${JSON.stringify(
-          transaction
-        )}
-      id: ${transaction.id}`);
-      })
-      .catch((err) => {
-        console.log(err);
-        throw err;
-      });
+    const orderRes = await create_payment(obj);
 
     if (result.success) {
-      return res.status(result.code).json(result.data);
+      return res.status(result.code).json({ ...result, orderRes });
     } else {
       return res.status(result.code).json({ error: result.error });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };

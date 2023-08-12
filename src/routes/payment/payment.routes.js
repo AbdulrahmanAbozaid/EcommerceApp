@@ -8,10 +8,17 @@ import * as endpoints from "../../helpers/endpoints.js";
 const app = Router();
 
 // Create a new payment
-app.post(
-  "/createPayment",
-  [validator(paymentSchema), authenticate(endpoints.CREATE_PAYMENT)],
-  createPayment
-);
+// app.post(
+//   "/createPayment",
+//   [validator(paymentSchema), authenticate(endpoints.CREATE_PAYMENT)],
+//   createPayment
+// );
 
+app.post("/createPayment", validator(paymentSchema), createPayment);
+
+app.get("/", (req, res) =>
+  res.render("index.ejs", {
+    clientID: process.env.PAYPAL_CLIENT,
+  })
+);
 export default app;
