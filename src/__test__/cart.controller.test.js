@@ -1,12 +1,14 @@
 import request from "supertest";
 import app from "../config/server.js";
-import { connect, disconnect } from "../config/database.js";
+// import { connect, disconnect } from "../config/database.js";
+import mongoose from "mongoose";
+
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzU5OTlmZmUyODNmMWFjMTY5NGIyNiIsImVtYWlsIjoic3Bla3RyYXNtaXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY5MTczMzIwNH0.YHy09JKc4LgHuaMOZ0XJTrVbtG7zTAjTQl_xtL3o3eQ";
 
 describe("Testing Cart Module", () => {
   beforeEach(() => {
-    connect();
+    mongoose.connect("mongodb://127.0.0.1:27017/EcommerceApp");
   });
 
   describe("Cart Routes", () => {
@@ -128,7 +130,7 @@ describe("Testing Cart Module", () => {
     });
   });
 
-  afterAll(async () => {
-    disconnect();
+  afterAll((done) => {
+    mongoose.disconnect(done);
   });
 });

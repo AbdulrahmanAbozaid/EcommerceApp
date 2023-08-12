@@ -40,6 +40,7 @@ io.on("connection", (socket) => {
 
   socket.on("join-room", (room) => {
     socket.join(room);
+    console.log("New Room: " + room);
   });
 
   socket.on("send-message", (room, message) => {
