@@ -22,8 +22,8 @@ app.use("/cart", cart);
 app.use("/api-docs", swaggerUi.serve);
 app.get("/api-docs", swaggerUi.setup(swaggerDocument));
 
-// app.get("/", (req, res) => {
-//   res.status(200).send("Welcome to order");
-// });
+app.get("*", (req, res) => {
+  res.status(200).send("Welcome to order");
+});
 
 export default app;

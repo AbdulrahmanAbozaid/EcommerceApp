@@ -8,6 +8,7 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
+import { handleFileUploadError } from "../services/uploader.service.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,6 +28,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "../public/")));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(handleFileUploadError);
 app.use(
   cors({
     origin: "*",

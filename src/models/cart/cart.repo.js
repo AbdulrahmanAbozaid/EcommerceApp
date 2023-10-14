@@ -34,12 +34,35 @@ const getCartByUserId = async (userId) => {
 
 const addToCart = async (userId, productId, quantity) => {
   try {
-    const cart = await Cart.findOneAndUpdate(
-      { user: userId, "items.product": { $ne: productId } },
-      { $push: { items: { product: productId, quantity } } },
-      { new: true, upsert: true }
-    );
-    return { success: true, code: 200, data: cart, error: null };
+    let cart, foundItem;
+    const userCart = await Cart.findOne({
+      user: userId,
+    });
+
+    if (userCart) {
+      foundItem = userCart.items.find((item) => item.product == productId);
+
+      if (foundItem) {
+        let newQuantity = +foundItem.quantity + +quantity;
+        foundItem.set("quantity", newQuantity);
+      } else {
+        foundItem = userCart.items.push({ quantity, product: productId });
+      }
+
+      cart = (await userCart.save()).populate("items.product", "user");
+      return { success: true, code: 200, data: cart, error: null };
+    } else {
+      cart = await Cart.create({
+        user: userId,
+        items: [
+          {
+            product: productId,
+            quantity,
+          },
+        ],
+      });
+      return { success: true, code: 200, data: cart, error: null };
+    }
   } catch (error) {
     return {
       success: false,
@@ -86,10 +109,39 @@ const removeFromCart = async (userId, productId) => {
   }
 };
 
+const flushCart = async (userId) => {
+  try {
+    const cart = await Cart.findOneAndUpdate(
+      { user: userId },
+      { items: [] },
+      { new: true }
+    ).populate("items.product", "productName price");
+
+    if (cart) {
+      return { success: true, code: 200, data: cart, error: null };
+    } else {
+      return {
+        success: false,
+        code: 404,
+        data: null,
+        error: "Cart not found.",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      code: 500,
+      data: null,
+      error: "Failed to flush cart.",
+    };
+  }
+};
+
 export {
   createCart,
   getCartByUserId,
   addToCart,
   updateCartItemQuantity,
   removeFromCart,
+  flushCart,
 };
